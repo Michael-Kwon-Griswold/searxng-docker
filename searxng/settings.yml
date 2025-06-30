@@ -1,11 +1,55 @@
-# see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
+# SearXNG settings
+
 use_default_settings: true
+
+general:
+  debug: false
+  instance_name: "home"
+
+search:
+  safe_search: 2
+  autocomplete: 'duckduckgo'
+  formats:
+    - html
+    - json
+
 server:
-  # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
-  secret_key: "ultrasecretkey"  # change this!
-  limiter: false  # enable this when running the instance for a public usage on the internet
+  # Is overwritten by ${SEARXNG_SECRET}
+  secret_key: "mzY93Gp1UAZybm4uEw6z7Uq8oUZeUrMC"
+  limiter: false
   image_proxy: true
+  # public URL of the instance, to ensure correct inbound links. Is overwritten
+  # by ${SEARXNG_BASE_URL}.
+  # base_url: http://example.com/location
+api:
+    enabled: true
+    api_key: testkey
+
+redis:
+  # URL to connect redis database. Is overwritten by ${SEARXNG_REDIS_URL}.
+  url: unix:///usr/local/searxng-redis/run/redis.sock?db=0
+
 ui:
   static_use_hash: true
-redis:
-  url: redis://redis:6379/0
+
+# preferences:
+#   lock:
+#     - autocomplete
+#     - method
+
+# engines:
+#
+#   - name: fdroid
+#     disabled: false
+#
+#   - name: apk mirror
+#     disabled: false
+#
+#   - name: mediathekviewweb
+#     categories: TV
+#     disabled: false
+engines:
+  - name: bing
+    engine: bing
+    api_key: "test"  # fake key for now if needed
+    disabled: false

@@ -7,7 +7,7 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy:/Users/littlestudio/dev/searxng-docker/caddy
       - caddy-data:/data:rw
       - caddy-config:/config:rw
     environment:
@@ -41,13 +41,15 @@ services:
     networks:
       - searxng
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
     volumes:
-      - ./searxng:/etc/searxng:rw
+      - /Users/littlestudio/dev/searxng-docker/searxng:/etc/searxng:rw
     environment:
-      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+      - SEARXNG_BASE_URL=http://0.0.0.0:8080/
+      - INSTANCE_NAME=home
       - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
       - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+      - SEARXNG_LIMITER=false
     logging:
       driver: "json-file"
       options:
