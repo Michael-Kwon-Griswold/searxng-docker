@@ -1,3 +1,65 @@
+This is a configuration of SearXNG through Docker which works with Jan-128 in the Jan application.
+
+In Jan:
+
+Under MCP Servers:
+
+Create a new MCP Server, naming it SearXNG
+
+command: npx
+args: -y, mcp-searxng
+Env:SEARXNG_URL=http://localhost:8080, SEARXNG_API_KEY=Testkey
+
+The JSON should look like this:
+
+{
+  "command": "npx",
+  "args": [
+    "-y",
+    "mcp-searxng"
+  ],
+  "env": {
+    "SEARXNG_URL": "http://localhost:8080",
+    "SEARXNG_API_KEY": "Testkey"
+  },
+  "active": true
+}
+
+Replace "Testkey" with a generated secret key.
+
+Credit given to the searxng team. This is modified from the searxng-docker repository on github to work with a local machine. Please refer to the original repository for any issues.
+
+https://github.com/searxng/searxng-docker
+
+I am using the Docker Desktop application for this as well as the terminal.
+
+build with:
+
+docker compose up -d
+
+tear down with
+
+docker compose down
+
+Or use the Docker Desktop application UI start and stop buttons.
+
+
+# Change for your system:
+
+In the docker-compose.yaml file, change the caddy and searxng folders to the absolute path of the caddy and searxng folders
+
+Currently:
+
+- ./caddy:/Users/littlestudio/dev/searxng-docker/caddy
+      - /Users/littlestudio/dev/searxng-docker/searxng:/etc/searxng:rw
+
+Make sure that the searxng-docker folder is somewhere inside the Users directory otherwise it will not bind to the server properly.
+
+
+For questions or collaboration: Michael-Kwon-Griswold [https://github.com/Michael-Kwon-Griswold]
+
+The following is a copy of the original readme from the SearXNG team:
+
 # searxng-docker
 
 Create a new SearXNG instance in five minutes using Docker
